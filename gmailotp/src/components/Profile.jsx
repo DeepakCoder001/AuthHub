@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/classic.css';
 import './Profile.css';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://authhub-backend-wyyr.onrender.com';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
