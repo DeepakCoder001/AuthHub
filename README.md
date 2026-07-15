@@ -192,11 +192,11 @@ Add your deployed project link here.
 
 Example:
 
-```
-https://your-project-link.com
-```
+Frontend:
+https://authhub-frontend.onrender.com
 
----
+Backend API:
+(https://authhub-backend-wyyr.onrender.com)
 
 ## 💻 GitHub Repository
 
