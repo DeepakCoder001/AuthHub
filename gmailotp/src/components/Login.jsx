@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/classic.css';
 
-const API = 'https://authhub-backend-wyyr.onrender.com/api';
+const API = 'https://authhub-backend-wyyr.onrender.com/api/login-otp';
 const Login = () => {
   const navigate = useNavigate();
 
