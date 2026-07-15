@@ -1,0 +1,49 @@
+.profile-card {
+  max-width: 440px;
+}
+
+.profile-field {
+  margin: 18px 0;
+  text-align: left;
+}
+
+.profile-field label {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.profile-value {
+  padding: 10px 12px;
+  background: #faf8f3;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  margin: 0;
+}
+
+.profile-field input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #999;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  outline: none;
+}
+
+.profile-field input:focus {
+  border-color: #333;
+}
+
+.btn-group {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-group .classic-btn {
+  flex: 1;
+}

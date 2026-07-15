@@ -1,0 +1,57 @@
+.nav-bar {
+  background: #2c2c2c;
+  border-bottom: 3px double #f5f5dc;
+  padding: 0 24px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.nav-brand {
+  color: #f5f5dc;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nav-brand span {
+  color: #c9a227;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0;
+}
+
+.nav-links li a {
+  display: block;
+  padding: 18px 20px;
+  color: #f5f5dc;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-left: 1px solid #444;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-links li:last-child a {
+  border-right: 1px solid #444;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  background: #f5f5dc;
+  color: #2c2c2c;
+}
+
+.app-content {
+  min-height: calc(100vh - 56px);
+}
