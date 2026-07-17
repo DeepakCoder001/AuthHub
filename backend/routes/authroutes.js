@@ -18,45 +18,82 @@ const sanitizeUser = (user) => {
 // =======================
 // SEND OTP
 // =======================
-router.post('/send-otp', async (req, res) => {
+// =======================
+// SEND OTP
+// =======================
+router.post("/send-otp", async (req, res) => {
   try {
-    const { email, purpose = 'register' } = req.body;
+    console.log("========== SEND OTP ==========");
+
+    const { email, purpose = "register" } = req.body;
+
+    console.log("Email:", email);
+    console.log("Purpose:", purpose);
 
     if (!email) {
-      return res.status(400).json({ message: 'Email is required' });
-    }
-
-    if (purpose === 'register') {
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'User already exists with this email' });
-      }
-    }
-
-    if (purpose === 'login') {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ message: 'No account found with this email' });
-      }
-    }
-
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-      return res.status(500).json({
-        message: 'Gmail not configured. Add GMAIL_USER and GMAIL_APP_PASSWORD to backend/.env'
+      return res.status(400).json({
+        message: "Email is required",
       });
     }
 
+    if (purpose === "register") {
+      const existingUser = await User.findOne({ email });
+
+      if (existingUser) {
+        return res.status(400).json({
+          message: "User already exists with this email",
+        });
+      }
+    }
+
+    if (purpose === "login") {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(400).json({
+          message: "No account found with this email",
+        });
+      }
+    }
+
+    console.log("Checking Gmail Environment...");
+    console.log("GMAIL_USER:", process.env.GMAIL_USER ? "Loaded" : "Missing");
+    console.log(
+      "GMAIL_APP_PASSWORD:",
+      process.env.GMAIL_APP_PASSWORD ? "Loaded" : "Missing"
+    );
+
     const otp = generateOtp();
 
+    console.log("Generated OTP:", otp);
+
     await Otp.deleteMany({ email, purpose });
+    console.log("Old OTP Deleted");
+
     await Otp.create({ email, otp, purpose });
+    console.log("New OTP Saved");
+
+    console.log("Sending Email...");
 
     await sendOtpEmail(email, otp, purpose);
 
-    res.json({ message: 'OTP sent to your Gmail. Check your inbox.' });
+    console.log("Email Sent Successfully");
+
+    return res.json({
+      success: true,
+      message: "OTP sent successfully",
+    });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Failed to send OTP', error: error.message });
+    console.error("SEND OTP ERROR:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to send OTP",
+      error: error.message,
+      code: error.code,
+      command: error.command,
+    });
   }
 });
 
