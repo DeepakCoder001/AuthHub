@@ -1,25 +1,6 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
-
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("SMTP Connection Error:", error);
-  } else {
-    console.log("SMTP Server is ready:", success);
-  }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOtpEmail = async (email, otp, purpose) => {
   const subject =
@@ -27,18 +8,29 @@ const sendOtpEmail = async (email, otp, purpose) => {
       ? "Your Login OTP - Phone App"
       : "Your Registration OTP - Phone App";
 
-  const mailOptions = {
-    from: `"Phone App" <${process.env.GMAIL_USER}>`,
-    to: email,
-    subject,
-    html: `
-      <h2>Your OTP</h2>
-      <h1>${otp}</h1>
-      <p>This OTP is valid for 10 minutes.</p>
-    `,
-  };
+  try {
+    const response = await resend.emails.send({
+      from: "Phone App <onboarding@resend.dev>",
+      to: email,
+      subject,
+      html: `
+        <h2>Your OTP</h2>
+        <h1>${otp}</h1>
+        <p>This OTP is valid for 10 minutes.</p>
+      `,
+    });
 
-  return await transporter.sendMail(mailOptions);
+    if (response.error) {
+      console.error("RESEND ERROR:", response.error);
+      throw new Error(response.error.message || "Failed to send email");
+    }
+
+    console.log("Email sent successfully:", response.data?.id);
+    return response;
+  } catch (error) {
+    console.error("SEND EMAIL ERROR:", error);
+    throw error;
+  }
 };
 
 module.exports = { sendOtpEmail };
