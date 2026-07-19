@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
   greetingTimeout: 30000,
   socketTimeout: 30000,
 });
-
 transporter.verify((error) => {
   if (error) {
     console.error("SMTP Connection Error:", error);

@@ -4,14 +4,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../styles/classic.css';
 
 const API = 'https://authhub-backend-wyyr.onrender.com/api';
-
 function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,17 +18,14 @@ function Register() {
     confirmPassword: '',
     otp: ''
   });
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSendOtp = async () => {
     if (!formData.email) {
       alert('Please enter your email first');
       return;
     }
-
     setOtpLoading(true);
     try {
       const res = await axios.post(`${API}/send-otp`, {
