@@ -56,12 +56,11 @@ router.post("/send-otp", async (req, res) => {
       }
     }
 
-    console.log("Checking Gmail Environment...");
-    console.log("GMAIL_USER:", process.env.GMAIL_USER ? "Loaded" : "Missing");
-    console.log(
-      "GMAIL_APP_PASSWORD:",
-      process.env.GMAIL_APP_PASSWORD ? "Loaded" : "Missing"
-    );
+   console.log("Checking SMTP Environment...");
+console.log("SMTP_HOST:", process.env.SMTP_HOST ? "Loaded" : "Missing");
+console.log("SMTP_USER:", process.env.SMTP_USER ? "Loaded" : "Missing");
+console.log("SMTP_PASS:", process.env.SMTP_PASS ? "Loaded" : "Missing");
+console.log("FROM_EMAIL:", process.env.FROM_EMAIL ? "Loaded" : "Missing");
 
     const otp = generateOtp();
 
