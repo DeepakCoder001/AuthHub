@@ -1,15 +1,10 @@
-const nodemailer = require("nodemailer");
-
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
   secure: false,
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-  tls: {
-    rejectUnauthorized: false,
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
@@ -28,7 +23,7 @@ const sendOtpEmail = async (email, otp, purpose) => {
       : "Your Registration OTP - Phone App";
 
   const mailOptions = {
-    from: `"Phone App" <${process.env.GMAIL_USER}>`,
+    from: `"Phone App" <${process.env.FROM_EMAIL}>`,
     to: email,
     subject,
     html: `
