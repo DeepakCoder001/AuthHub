@@ -10,7 +10,7 @@ const sendOtpEmail = async (email, otp, purpose) => {
 
   try {
     const response = await resend.emails.send({
-      from: "Phone App <onboarding@resend.dev>",
+     from: "Phone App <noreply@authhub.shop>",
       to: email,
       subject,
       html: `
